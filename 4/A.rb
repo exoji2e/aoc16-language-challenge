@@ -8,11 +8,10 @@ STDIN.read.split("\n").each do |a|
     txt.each_char do |c|
         h[c] += 1
     end
-    realhif = (h.sort_by{|k, v| [v,-(k.ord)]}.reverse[0..4]).map{|row| row[0]}.join("")
+    realhif = (h.sort_by{|k, v| [-v,(k.ord)]}[0..4]).map{|row| row[0]}.join("")
 
     if(realhif == hif) then 
         arr << nbr
     end
-    
 end
 puts(arr.inject(0){|sum,x| sum + x})
