@@ -19,8 +19,15 @@ func abs(x: Int) -> Int {
         return -x
     }
 }
-func coords(x:Int, y:Int) -> String {
-    return String(x) + "," + String(y)
+func updateX(x: Int, d: Int) -> Int {
+    if(d == 0) {return x + 1}
+    else if(d == 2) {return x - 1}
+    else {return x}
+}
+func updateY(y: Int, d: Int) -> Int {
+    if(d == 1) {return y + 1 }
+    else if(d == 3) {return y - 1}
+    else {return y}
 }
 var input = readLine()!
 var inarr = input.characters.split{$0 == ","}.map(String.init)
@@ -43,49 +50,15 @@ for inp in inarr {
     let end = str.startIndex.distanceTo(str.endIndex)
     let sub = str[1..<end]
     let dist = Int(sub)!
-    if(d == 0) {
-        let nx = x + dist
-        while(nx > x) {
-            x = x + 1
-            arr[x][y] = arr[x][y] + 1;
-            if(arr[x][y] == 2) {
-                print(abs(x-1000) + abs(y-1000))
-                exit(0);
-            }
+    var i = 0
+    while(i<dist){
+        x = updateX(x, d:d)
+        y = updateY(y, d:d)
+        arr[x][y] = arr[x][y] + 1
+        if(arr[x][y] == 2) {
+            print(abs(x-1000) + abs(y-1000))
+            exit(0)
         }
-    }
-    if(d == 1) {
-        let ny = y + dist
-        while(ny > y) {
-            y = y + 1
-            arr[x][y] = arr[x][y] + 1;
-            if(arr[x][y] == 2) {
-                print(abs(x-1000) + abs(y-1000))
-                exit(0);
-            }
-        }
-    }
-    if(d == 2) {
-        let nx = x - dist
-        while(nx < x) {
-            x = x - 1
-            arr[x][y] = arr[x][y] + 1;
-            if(arr[x][y] == 2) {
-                print(abs(x-1000) + abs(y-1000))
-                exit(0);
-            }
-        }
-    }
-    if(d == 3) {
-        let ny = y - dist
-        while(ny < y) {
-            y = y - 1
-            arr[x][y] = arr[x][y] + 1;
-            if(arr[x][y] == 2) {
-                print(abs(x-1000) + abs(y-1000))
-                exit(0);
-            }
-        }
+        i = i+1
     }
 }
-print(abs(x) + abs(y))
