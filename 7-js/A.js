@@ -21,8 +21,7 @@ function valid(str) {
     let start = str.indexOf('[')
     let end = str.indexOf(']')
     if(start == -1 || end == -1) {
-        var m = match(str)
-        return m? 1: 0
+        return match(str)? 1: 0
     }
     var m1 = match(str.substring(0,start))
     var m2 = match(str.substring(start+1,end))
