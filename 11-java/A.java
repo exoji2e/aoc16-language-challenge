@@ -1,9 +1,6 @@
-import java.util.LinkedList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*
 public class A {
-    private static class FuncCall{ //Since i'm using a bfs I want to save the function calls.
+    private static class FuncCall{
         int[] n;
         int k;
         int e;
@@ -14,7 +11,7 @@ public class A {
         }
     }
 
-    private static class Pair implements Comparable<Pair> { //helper class to the state vector.
+    private static class Pair implements Comparable<Pair> {
         int x, y;
         public Pair(int x, int y) {
             this.x = x; this.y = y;
@@ -50,20 +47,20 @@ public class A {
             if(s.equals(finalstate)) break; //found final state!
 
             for(int i = 0; i<f.n.length; i++) {
-                if(f.n[i] != f.e) continue; //element isn't on elevator level.
+                if(f.n[i] != f.e) continue; 
                 f.n[i]--;
-                bfs.addLast(new FuncCall(f.n, f.k+1, f.e-1)); //put call to move n[i] on que
+                bfs.addLast(new FuncCall(f.n, f.k+1, f.e-1)); //move n[i]
                 f.n[i]+=2;
-                bfs.addLast(new FuncCall(f.n, f.k+1, f.e+1)); //put call to move n[i] on que
+                bfs.addLast(new FuncCall(f.n, f.k+1, f.e+1)); //move n[i]
                 f.n[i]--;
                 
                 for(int j = i+1; j<f.n.length; j++) {
                     if(f.n[j] != f.e) continue;
-                    f.n[i]--; f.n[j]--; //mv down
-                    bfs.addLast(new FuncCall(f.n, f.k+1, f.e-1)); //put call to move n[i]&n[j] on que
-                    f.n[i]+=2; f.n[j]+=2; //mv up
-                    bfs.addLast(new FuncCall(f.n, f.k+1, f.e+1)); //put call to move n[i]&n[j] on que
-                    f.n[i]--; f.n[j]--; //reset
+                    f.n[i]--; f.n[j]--; 
+                    bfs.addLast(new FuncCall(f.n, f.k+1, f.e-1)); //move n[i]&n[j]
+                    f.n[i]+=2; f.n[j]+=2; 
+                    bfs.addLast(new FuncCall(f.n, f.k+1, f.e+1)); //move n[i]&n[j]
+                    f.n[i]--; f.n[j]--;
                 }
             }
         }
