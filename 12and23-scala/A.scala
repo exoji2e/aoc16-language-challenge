@@ -37,7 +37,7 @@ object A {
     println(regs(0))
   }  
 }
-abstract class Inst {
+trait Inst {
   def exec(regs: Array[Int], program: Array[Inst], id:Int):Int
   def toggle():Inst
 }
