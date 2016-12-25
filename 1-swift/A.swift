@@ -19,11 +19,24 @@ func abs(x: Int) -> Int {
         return -x
     }
 }
+func updateX(x: Int, d: Int) -> Int {
+    if(d == 0) {return x + 1}
+    else if(d == 2) {return x - 1}
+    else {return x}
+}
+func updateY(y: Int, d: Int) -> Int {
+    if(d == 1) {return y + 1 }
+    else if(d == 3) {return y - 1}
+    else {return y}
+}
 var input = readLine()!
 var inarr = input.characters.split{$0 == ","}.map(String.init)
-var x = 0
-var y = 0
+var x = 1000
+var y = 1000
+var arr = Array(count: 2000, repeatedValue: Array(count: 2000, repeatedValue: 0))
 var d = 0
+var p2 = -1;
+import Foundation
 for inp in inarr {
     var str = inp
     if(inp[0] == " ") {
@@ -38,11 +51,16 @@ for inp in inarr {
     let end = str.startIndex.distanceTo(str.endIndex)
     let sub = str[1..<end]
     let dist = Int(sub)!
-    switch(d) {
-        case 0: x = x + dist
-        case 1: y = y + dist
-        case 2: x = x - dist
-        default: y = y - dist
+    var i = 0
+    while(i<dist){
+        x = updateX(x, d:d)
+        y = updateY(y, d:d)
+        arr[x][y] = arr[x][y] + 1
+        if(arr[x][y] == 2 && p2 == -1) {
+            p2 = abs(x-1000) + abs(y-1000)
+        }
+        i = i+1
     }
 }
-print(abs(x) + abs(y))
+print(abs(x-1000) + abs(y-1000))
+print(p2)
