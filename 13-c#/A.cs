@@ -37,7 +37,7 @@ public class A {
             for(int i = 0; i<4; i++) {
                 int x = c.x + dx[i];
                 int y = c.y + dy[i];
-                if(free(x,y)) {
+                if(Free(x,y)) {
                     bfs.AddLast(new Coord(x, y, c.d + 1));
                 }
             }
@@ -46,11 +46,11 @@ public class A {
         Console.WriteLine(part2);
 
     }
-    public static bool free(int x, int y) {
+    public static bool Free(int x, int y) {
         int n = x*x + 3*x + 2*x*y + y + y*y + magic;
-        return x>=0 && y>=0 && bitCount(n)%2 == 0;
+        return x>=0 && y>=0 && BitCount(n)%2 == 0;
     }
-    public static int bitCount(int n) {
+    public static int BitCount(int n) {
         int c = 0;
         while(n>0) {
             if(n%2 == 1) c++;
