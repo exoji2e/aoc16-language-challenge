@@ -1,4 +1,4 @@
-import java.util.*
+import java.util.*;
 public class A {
     private static class FuncCall{
         int[] n;
