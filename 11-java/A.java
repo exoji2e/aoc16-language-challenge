@@ -23,6 +23,7 @@ public class A {
     }
 
     public static void main(String args[]) {
+        long t = System.currentTimeMillis();
         Scanner sc = new Scanner(System.in);
         int[] n = new int[2*sc.nextInt()];
         for(int i = 0; i<n.length; i++) {
@@ -50,11 +51,22 @@ public class A {
                 if(f.n[i] != f.e) continue; 
                 f.n[i]--;
                 bfs.addLast(new FuncCall(f.n, f.k+1, f.e-1)); //move n[i]
+                boolean mvnxt = i%2==0 && f.n[i+1] == f.e;
+                if(mvnxt) {
+                    f.n[i+1]--;
+                    bfs.addLast(new FuncCall(f.n, f.k+1, f.e-1)); //move n[i]
+                    f.n[i+1]++;
+                }
                 f.n[i]+=2;
                 bfs.addLast(new FuncCall(f.n, f.k+1, f.e+1)); //move n[i]
+                if(mvnxt) {
+                    f.n[i+1]++;
+                    bfs.addLast(new FuncCall(f.n, f.k+1, f.e+1)); //move n[i]
+                    f.n[i+1]--;
+                }
                 f.n[i]--;
                 
-                for(int j = i+1; j<f.n.length; j++) {
+                for(int j = i+2; j<f.n.length; j+=2) {
                     if(f.n[j] != f.e) continue;
                     f.n[i]--; f.n[j]--; 
                     bfs.addLast(new FuncCall(f.n, f.k+1, f.e-1)); //move n[i]&n[j]
@@ -64,7 +76,8 @@ public class A {
                 }
             }
         }
-        System.out.println(map.get(finalstate));
+        long t2 = System.currentTimeMillis();
+        System.out.println(map.get(finalstate) + " time: " + (t2-t) + "ms");
     }
 
     public static void sortx(int[] n) {
