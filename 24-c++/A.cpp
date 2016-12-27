@@ -17,11 +17,10 @@ string hash_state(struct state* s, int elem) {
     }
     return ret;
 }
-bool done(struct state* s, int elem) {
+bool done(struct state* s, int len) {
     bool ok = true;
-    for(int i = 0; i<elem; i++) {
+    for(int i = 0; i<len; i++) 
         ok = ok && (*s->found)[i];
-    }
     return ok;
 }
 int main() {
@@ -31,9 +30,9 @@ int main() {
     int sx = in.size();
     int sy = in[0].length();
     int** arr = new int*[sx];
-    for(int i = 0; i<sx; i++) {
+    for(int i = 0; i<sx; i++) 
         arr[i] = new int[sy];
-    }
+
     int x0 = -1;
     int y0 = -1;
     int elems = 0;
@@ -57,26 +56,26 @@ int main() {
     struct state* start = (struct state*) malloc(sizeof(struct state)); 
     start->x = x0; start->y = y0; start->dist = 0;
     start->found = new vector<bool>;
-    for(int i = 0; i<elems; i++) {
+    for(int i = 0; i<elems; i++)
         start->found->push_back(false);
-    }
+
     bfs.push(start);
     int part1 = 0, part2 = 0;
     while(!bfs.empty() && (part1 == 0 || part2 == 0)) {
         struct state* old = bfs.front();
         bfs.pop();
         string hash = hash_state(old, elems);
+        if(set.find(hash) != set.end()) {
+            delete old->found;
+            delete old;
+            continue;
+        }
         if(done(old, elems) && part1 == 0) {
             part1 = old->dist;
         }
         if(done(old, elems) && old->x == x0 && old->y == y0) {
             part2 = old->dist;
             break;
-        }
-        unordered_set<string>::const_iterator got = set.find(hash);
-        if(got != set.end()) {
-            delete old;
-            continue;
         }
         set.insert(hash);
         for(int i = 0; i<4; i++) {
